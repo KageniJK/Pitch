@@ -3,6 +3,8 @@ class Config:
     class that set the general config
     """
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     @staticmethod
     def init_app(app):
         pass

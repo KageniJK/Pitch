@@ -1,10 +1,11 @@
 from flask import render_template
+from . import main
 
 
 @main.route('/')
 def index():
     """
-    Dispay the landing page
+    Display the landing page
     :return:
     """
 

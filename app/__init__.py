@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from config import config_options
 
 db = SQLAlchemy()
+
+
 def create_app(config_name):
     """
     creating the app instance while taking in the config
@@ -20,4 +23,6 @@ def create_app(config_name):
     # initialising the app
 
     db.init_app(app)
-    
+
+    from .main import main as main_blueprint
+

@@ -4,6 +4,11 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+@login_manager.user_loader
+def load_user(user_id):
+        return User.query.get(int(user_id))
+
+
 class User(UserMixin, db.model):
     """
     class that describes the users on the app
@@ -45,6 +50,7 @@ class Pitch(db.model):
     time_posted = db.Column(db.DateTime, default=datetime.utcnow)
     title = db.Column(db.String(255))
     pitch_actual = db.Column(db.String)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
 
 
@@ -55,7 +61,7 @@ class Pitch(db.model):
 
     @classmethod
     def get_pitches(cls, id):
-        pitches = Pitch.query.filter_by(category_id).all()
+        pitches = Pitch.query.filter_by(category_id=id).all()
         return pitches
 
 class Categeory(db.model):

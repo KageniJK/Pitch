@@ -2,7 +2,7 @@
 App that allows users to view, create, vote on and comment on one minute pitches
 
 
-##By: James Kageni
+#### By: James Kageni
 
 #### Description
 
@@ -15,7 +15,7 @@ Pitch is where you can do that. Login make your pitch and get reviews on them. V
 1. Python
 2. Flask
 3. SQL
-4. 
-5.
+4. postgreSQL
+5. Bootstrap 4
 
 

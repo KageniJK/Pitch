@@ -14,9 +14,9 @@ class User(UserMixin, db.Model):
     class that defines the users
     """
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key= True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), index=True)
-    email = db.Column (db.String(255), unique = True, index = True)
+    email = db.Column(db.String(255), unique=True, index = True)
     avatar = db.Column(db.String())
     password_hashed = db.Column(db.String(255))
 
@@ -29,10 +29,10 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.password_hash= generate_password_hash(password)
+        self.password_hashed= generate_password_hash(password)
 
     def verify_password(self,password):
-        return check_password_hash(self.password_hash,password)
+        return check_password_hash(self.password_hashed, password)
 
     def __repr__(self):
         return f'User {self.username}'
@@ -49,10 +49,8 @@ class Pitch(db.Model):
     time_posted = db.Column(db.DateTime, default=datetime.utcnow)
     title = db.Column(db.String(255))
     pitch_actual = db.Column(db.String)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-
-
-
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def save_pitch(self):
         db.session.add(self)
@@ -62,6 +60,7 @@ class Pitch(db.Model):
     def get_pitches(cls, id):
         pitches = Pitch.query.filter_by(category_id=id).all()
         return pitches
+
 
 class Categeory(db.Model):
     """

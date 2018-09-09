@@ -9,20 +9,19 @@ def load_user(user_id):
         return User.query.get(int(user_id))
 
 
-class User(UserMixin, db.model):
+class User(UserMixin, db.Model):
     """
-    class that describes the users on the app
+    class that defines the users
     """
-
     __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.column(db.String(255), index=True)
-    email = db.Column(db.String(255), index=True)
+    id = db.Column(db.Integer, primary_key= True)
+    username = db.Column(db.String(255), index=True)
+    email = db.Column (db.String(255), unique = True, index = True)
+    avatar = db.Column(db.String())
     password_hashed = db.Column(db.String(255))
-    avatar = db.Column(db.String)
 
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
+
 
     @property
     def password(self):
@@ -30,16 +29,16 @@ class User(UserMixin, db.model):
 
     @password.setter
     def password(self, password):
-        self.password_hashed = generate_password_hash(password)
+        self.password_hash= generate_password_hash(password)
 
-    def verify_password(self, password):
-        return check_password_hash(self.password_hashed, password)
+    def verify_password(self,password):
+        return check_password_hash(self.password_hash,password)
 
     def __repr__(self):
         return f'User {self.username}'
 
 
-class Pitch(db.model):
+class Pitch(db.Model):
     """
     class that defines the pitches
     """
@@ -64,7 +63,7 @@ class Pitch(db.model):
         pitches = Pitch.query.filter_by(category_id=id).all()
         return pitches
 
-class Categeory(db.model):
+class Categeory(db.Model):
     """
     class that defines the categories of the pitches
     """

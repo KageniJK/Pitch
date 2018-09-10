@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Welcome to Pitch
+Thank you for signing up. we would just like to welcome you to the finer things in life

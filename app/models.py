@@ -22,7 +22,6 @@ class User(UserMixin, db.Model):
 
     pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
 
-
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')

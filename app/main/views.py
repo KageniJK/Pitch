@@ -32,7 +32,9 @@ def profile(uname):
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    pitches = Pitch.query.filter_by(user_id=user.id).all()
+    return render_template("profile/profile.html", user = user, pitches=pitches)
+
 
 @main.route('/user/<uname>/update', methods = ['GET', 'POST'])
 @login_required
@@ -92,7 +94,7 @@ def new_pitch():
 
         fresh_pitch.save_pitch()
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.profile(current_user)'))
     title = 'New pitch'
     return render_template('new_pitch.html' , title=title, pitch_form=form, user = current_user)
 

@@ -19,6 +19,7 @@
     </form>
       <a href="{{url_for('main.new_pitch')}}">New Pitch</a>
       {% endif %}
+
   </div>
 
 
@@ -27,7 +28,20 @@
   <div class="col-md-4">
 
 
-
+      <ul>
+            {% for pitch in pitches %}
+          <li>
+              <div class="card">
+                  <div class="card-title">
+                      <strong>{{pitch.title}}</strong>
+                  </div>
+                  <div class="card-body">
+                      {{pitch.pitch_actual}}
+                  </div>
+              </div>
+          </li>
+            {% endfor %}
+      </ul>
   </div>
 </div>
 </div>

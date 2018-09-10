@@ -75,3 +75,26 @@ def update_pic(uname):
     return redirect(url_for('main.profile', uname=uname))
 
 
+@main.route('/new_pitch', methods=['GET', 'POST'])
+@login_required
+def new_pitch():
+    """
+    route to new pitch form
+    :return:
+    """
+    form = PitchForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        pitch = form.pitch.data
+
+        fresh_pitch = Pitch(title=title, pitch_actual=pitch, user_id=current_user.id)
+
+        fresh_pitch.save_pitch()
+
+        return redirect(url_for('main.index'))
+    title = 'New pitch'
+    return render_template('new_pitch.html' , title=title, pitch_form=form, user = current_user)
+
+
+

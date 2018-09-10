@@ -75,3 +75,19 @@ class Categeory(db.Model):
 
     def __repr__(self):
         return f'User {self.name}'
+
+
+class Comment(db.Model):
+    """
+    class that defines the comments on pitches
+    """
+
+    __tablename__='comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String(255))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()

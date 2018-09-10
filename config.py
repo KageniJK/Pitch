@@ -8,6 +8,7 @@ class Config:
 
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    UPLOADED_PHOTOS_DEST = 'app/static/profile_pics'
 
     @staticmethod
     def init_app(app):

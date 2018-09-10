@@ -28,7 +28,7 @@ class ProdConfig(Config):
     class that sets up production config
     """
 
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 
 class DevConfig(Config):

@@ -45,7 +45,6 @@ class Pitch(db.Model):
     __tablename__='pitches'
 
     id = db.Column(db.Integer, primary_key=True)
-    time_posted = db.Column(db.DateTime, default=datetime.utcnow)
     title = db.Column(db.String(255))
     pitch_actual = db.Column(db.String)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))

@@ -94,9 +94,9 @@ def new_pitch():
 
         fresh_pitch.save_pitch()
 
-        return redirect(url_for('main.profile(current_user)'))
+        return redirect(url_for('.profile', uname=current_user.username))
     title = 'New pitch'
-    return render_template('new_pitch.html' , title=title, pitch_form=form, user = current_user)
+    return render_template('new_pitch.html' , title=title, pitch_form=form)
 
 
 

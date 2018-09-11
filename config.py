@@ -35,7 +35,6 @@ class DevConfig(Config):
     """
     class that sets up the development config
     """
-
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://qagz:password@localhost/pitch'
     DEBUG = True
 

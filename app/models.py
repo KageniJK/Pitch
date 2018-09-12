@@ -1,6 +1,5 @@
 from . import db, login_manager
 from flask_login import UserMixin
-from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -47,7 +46,7 @@ class Pitch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     pitch_actual = db.Column(db.String)
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def save_pitch(self):
@@ -60,19 +59,19 @@ class Pitch(db.Model):
         return pitches
 
 
-class Categeory(db.Model):
-    """
-    class that defines the categories of the pitches
-    """
-
-    __tablename__ = 'categories'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    pitches = db.relationship('Pitch', backref='category', lazy="dynamic")
-
-    def __repr__(self):
-        return f'User {self.name}'
+# class Categeory(db.Model):
+#     """
+#     class that defines the categories of the pitches
+#     """
+#
+#     __tablename__ = 'categories'
+#
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(255))
+#     pitches = db.relationship('Pitch', backref='category', lazy="dynamic")
+#
+#     def __repr__(self):
+#         return f'User {self.name}'
 
 
 class Comment(db.Model):

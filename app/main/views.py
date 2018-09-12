@@ -36,34 +36,6 @@ def profile(uname):
     return render_template("profile/profile.html", user = user, pitches=pitches)
 
 
-@main.route('/user/<uname>/update', methods = ['GET', 'POST'])
-@login_required
-def update_profile(uname):
-    """
-    update user profiles
-    :param uname:
-    :return:
-    """
-    user = User.query.filter_by(username=uname).first()
-    if user is None:
-        abort(404)
-
-
-    form = UpdateProfile()
-
-    if form.validate_on_submit():
-        user.bio =  form.bio.data
-
-
-        db.session.add(user)
-        db.session.commit()
-
-
-        return redirect(url_for('.profile', uname=user.username))
-
-    return render_template('profile/update.html', form = form)
-
-
 @main.route('/user/<uname>/update/pic', methods = ['POST'])
 @login_required
 def update_pic(uname):
@@ -89,8 +61,9 @@ def new_pitch():
     if form.validate_on_submit():
         title = form.title.data
         pitch = form.pitch.data
+        category = form.category.data
 
-        fresh_pitch = Pitch(title=title, pitch_actual=pitch, user_id=current_user.id)
+        fresh_pitch = Pitch(title=title, pitch_actual=pitch, category=category, user_id=current_user.id)
 
         fresh_pitch.save_pitch()
 
@@ -98,5 +71,15 @@ def new_pitch():
     title = 'New pitch'
     return render_template('new_pitch.html' , title=title, pitch_form=form)
 
+
+@main.route('/single_pitch')
+def single_pitch():
+    """
+    route to a single post
+    :return:
+    """
+    pitch = Pitch.query.filter_by(id).first()
+
+    return render_template('lonely_pitch.html')
 
 

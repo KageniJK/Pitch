@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-{% for cat in categori %}
-{{cat.title}}
-{% endfor%}
-
+<div class="container">
+    {% for cat in category %}
+        <h3>{{cat.title}}:</h3>
+    <hr>
+        &emsp; &emsp; {{cat.pitch_actual}}
+    <hr>
+    {% endfor%}
+</div>
 {% endblock %}

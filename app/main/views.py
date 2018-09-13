@@ -76,37 +76,29 @@ def single_pitch(pitch_id):
     route to a single post
     :return:
     """
+    form = CommentForm()
     pitch = Pitch.query.filter_by(id=pitch_id).first()
 
-    return render_template('lonely_pitch.html', pitch_id=pitch.id, pitch=pitch)
+    if form.validate_on_submit():
+        comment = form.comment.data
+        new_comment = Comment(comment=comment, pitch_id=pitch_id)
 
+        new_comment.save_comment()
 
-@main.route('/category/<category>')
-def single_category(category):
+        return redirect(url_for('.pitch', pitch_id=pitch.id))
+
+    return render_template('lonely_pitch.html', pitch_id=pitch.id, pitch=pitch, comment_form=form)
+
+@main.route('/category/coding')
+def deals():
     """
-    route to the view by category feature
-    :param category:
+    route to deals category
     :return:
     """
+    category = Pitch.query.filter_by(category='coding').all()
+    title = 'deals'
 
-    categori = Pitch.query.filter_by(category=category).all()
-
-    return render_template('category.html', category=category, categori=categori)
-
-
-@main.route('/single_pitch/<pitch_id>/comment')
-def comment(pitch_id):
-    """
-    comment on the pitches
-    :return:
-    """
-    form = CommentForm
-
-    new_comment = Comment(comment=comment, pitch_id=pitch_id)
-
-    new_comment.save_comment()
-
-    return redirect(url_for('.pitch'))
+    return render_template('category.html', category=category, title=title)
 
 
 

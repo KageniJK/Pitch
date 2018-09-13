@@ -70,7 +70,7 @@ def new_pitch():
     return render_template('new_pitch.html' , title=title, pitch_form=form)
 
 
-@main.route('/single_pitch/<pitch_id>')
+@main.route('/single_pitch/<pitch_id>', methods=['GET', 'POST'])
 def single_pitch(pitch_id):
     """
     route to a single post
@@ -85,18 +85,20 @@ def single_pitch(pitch_id):
 
         new_comment.save_comment()
 
-        return redirect(url_for('.pitch', pitch_id=pitch.id))
+        return redirect(url_for('.single_pitch', pitch_id=pitch.id))
+    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
 
-    return render_template('lonely_pitch.html', pitch_id=pitch.id, pitch=pitch, comment_form=form)
+    return render_template('lonely_pitch.html', pitch_id=pitch.id, pitch=pitch, comment_form=form, comments=comments)
 
-@main.route('/category/coding')
-def deals():
+
+@main.route('/category/<categoree>')
+def category(categoree):
     """
     route to deals category
     :return:
     """
-    category = Pitch.query.filter_by(category='coding').all()
-    title = 'deals'
+    category = Pitch.query.filter_by(category=categoree).all()
+    title = categoree
 
     return render_template('category.html', category=category, title=title)
 

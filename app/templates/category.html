@@ -3,10 +3,10 @@
 {% block content %}
 <div class="container">
     {% for cat in category %}
-        <h3>{{cat.title}}:</h3>
+        <h3><a href="{{url_for('main.single_pitch', pitch_id=cat.id)}}">{{cat.title}}:</a></h3>
     <hr>
         &emsp; &emsp; {{cat.pitch_actual}}
     <hr>
-    {% endfor%}
+    {% endfor %}
 </div>
 {% endblock %}

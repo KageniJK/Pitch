@@ -2,8 +2,9 @@
 
 
 {% block content %}
-<a href="#">Sales</a>
-<a href="#">Tech</a>
-<a href="#">Life</a>
-
+<div class="container">
+    <h1><a href="{{url_for('main.category', categoree='coding')}}">Coding</a></h1>
+    <h1><a href="{{url_for('main.category', categoree='technology')}}">Technology</a></h1>
+    <h1><a href="{{url_for('main.category', categoree='deals')}}">Deals</a></h1>
+</div>
 {% endblock %}

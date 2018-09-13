@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
-{% content block %}
+{% block content %}
 
+{% for cat in categori %}
+{{cat.title}}
+{% endfor%}
 
 {% endblock %}

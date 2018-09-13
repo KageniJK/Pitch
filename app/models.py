@@ -59,21 +59,6 @@ class Pitch(db.Model):
         return pitches
 
 
-# class Categeory(db.Model):
-#     """
-#     class that defines the categories of the pitches
-#     """
-#
-#     __tablename__ = 'categories'
-#
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(255))
-#     pitches = db.relationship('Pitch', backref='category', lazy="dynamic")
-#
-#     def __repr__(self):
-#         return f'User {self.name}'
-
-
 class Comment(db.Model):
     """
     class that defines the comments on pitches
@@ -85,6 +70,6 @@ class Comment(db.Model):
     comment = db.Column(db.String(255))
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
 
-    def save_pitch(self):
+    def save_comment(self):
         db.session.add(self)
         db.session.commit()

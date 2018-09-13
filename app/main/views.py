@@ -1,11 +1,9 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..models import Pitch, User
+from ..models import Pitch, User, Comment
 from flask_login import login_required, current_user
-from .forms import PitchForm, UpdateProfile
+from .forms import PitchForm, CommentForm
 from .. import db, photos
-
-
 
 
 @main.route('/')
@@ -72,14 +70,43 @@ def new_pitch():
     return render_template('new_pitch.html' , title=title, pitch_form=form)
 
 
-@main.route('/single_pitch')
-def single_pitch():
+@main.route('/single_pitch/<pitch_id>')
+def single_pitch(pitch_id):
     """
     route to a single post
     :return:
     """
-    pitch = Pitch.query.filter_by(id).first()
+    pitch = Pitch.query.filter_by(id=pitch_id).first()
 
-    return render_template('lonely_pitch.html')
+    return render_template('lonely_pitch.html', pitch_id=pitch.id, pitch=pitch)
+
+
+@main.route('/category/<category>')
+def single_category(category):
+    """
+    route to the view by category feature
+    :param category:
+    :return:
+    """
+
+    categori = Pitch.query.filter_by(category=category).all()
+
+    return render_template('category.html', category=category, categori=categori)
+
+
+@main.route('/single_pitch/<pitch_id>/comment')
+def comment(pitch_id):
+    """
+    comment on the pitches
+    :return:
+    """
+    form = CommentForm
+
+    new_comment = Comment(comment=comment, pitch_id=pitch_id)
+
+    new_comment.save_comment()
+
+    return redirect(url_for('.pitch'))
+
 
 
